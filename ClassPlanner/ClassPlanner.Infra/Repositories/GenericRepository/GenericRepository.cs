@@ -1,11 +1,13 @@
-﻿using ClassPlanner.Infra.Context;
+﻿using ClassPlanner.Domain.Entities;
+using ClassPlanner.Domain.Interfaces;
+using ClassPlanner.Infra.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ClassPlanner.Infra.Repositories.GenericRepository
 {
-    public class GenericRepository
-    {
         public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : BaseEntity
         {
             public readonly MainContext _dbContext;
@@ -23,7 +25,7 @@ namespace ClassPlanner.Infra.Repositories.GenericRepository
             public async Task Delete (Guid id)
             {
                 var entity = await GetById(id);
-                _dbContext.Set<Entity>().Remove(entity);
+                _dbContext.Set<TEntity>().Remove(entity);
                 await _dbContext.SaveChangesAsync();
             }
 
@@ -31,6 +33,25 @@ namespace ClassPlanner.Infra.Repositories.GenericRepository
             {
                 return _dbContext.Set<TEntity>().AsNoTracking();
             }
+
+            public async Task<TEntity> GetById (Guid id)
+            {
+                return await _dbContext.Set<TEntity>()
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(e => e.Id == id);
+            }
+
+            public async Task Update (Guid Id, TEntity entity)
+            {
+                _dbContext.Set<TEntity>().Update(entity);
+                await _dbContext.SaveChangesAsync();
+            }
+
+        public async Task<bool> EntityExists(Guid id)
+        {
+            return _dbContext.Set<TEntity>().Any(x => x.Id == id);
+        }
+
         }
     }
-}
+

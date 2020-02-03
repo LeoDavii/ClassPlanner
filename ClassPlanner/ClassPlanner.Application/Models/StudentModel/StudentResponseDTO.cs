@@ -1,4 +1,4 @@
-﻿namespace ClassPlanner.Application.Models.Student
+﻿namespace ClassPlanner.Application.Models.StudentModel
 {
     public class StudentResponseDTO: StudentBaseDTO
     {
