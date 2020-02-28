@@ -41,9 +41,16 @@ namespace ClassPlanner.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IList<StudentResponseDTO>> GetAll()
+        public IList<StudentResponseDTO> GetAll()
         {
-            return await _studentService.GetAll();
+            return _studentService.GetAll();
+        }
+
+        [HttpGet]
+        [Route("actives")]
+        public IList<StudentResponseDTO> GetAllActives()
+        {
+            return _studentService.GetAllActives();
         }
 
         [HttpGet]

@@ -4,14 +4,16 @@ using ClassPlanner.Infra.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ClassPlanner.Infra.Migrations
 {
     [DbContext(typeof(MainContext))]
-    partial class MainContextModelSnapshot : ModelSnapshot
+    [Migration("20200216181913_Teacher")]
+    partial class Teacher
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,12 +28,6 @@ namespace ClassPlanner.Infra.Migrations
 
                     b.Property<bool>("Active")
                         .HasColumnName("Active");
-
-                    b.Property<DateTime>("AlterationDate")
-                        .HasColumnName("AlterationDate");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnName("CreationDate");
 
                     b.Property<int>("RegistrationId");
 
@@ -64,9 +60,6 @@ namespace ClassPlanner.Infra.Migrations
                         .IsRequired()
                         .HasColumnName("Address");
 
-                    b.Property<DateTime>("AlterationDate")
-                        .HasColumnName("AlterationDate");
-
                     b.Property<string>("CPF")
                         .IsRequired()
                         .HasColumnName("CPF");
@@ -74,9 +67,6 @@ namespace ClassPlanner.Infra.Migrations
                     b.Property<string>("Contact")
                         .IsRequired()
                         .HasColumnName("Contact");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnName("CreationDate");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -98,12 +88,6 @@ namespace ClassPlanner.Infra.Migrations
                     b.Property<bool>("Active")
                         .HasColumnName("Active");
 
-                    b.Property<DateTime>("AlterationDate")
-                        .HasColumnName("AlterationDate");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnName("CreationDate");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnName("Name");
@@ -121,15 +105,9 @@ namespace ClassPlanner.Infra.Migrations
                     b.Property<bool>("Active")
                         .HasColumnName("Active");
 
-                    b.Property<DateTime>("AlterationDate")
-                        .HasColumnName("AlterationDate");
-
                     b.Property<string>("CPF")
                         .IsRequired()
                         .HasColumnName("CPF");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnName("CreationDate");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -147,12 +125,6 @@ namespace ClassPlanner.Infra.Migrations
 
                     b.Property<bool>("Active")
                         .HasColumnName("Active");
-
-                    b.Property<DateTime>("AlterationDate")
-                        .HasColumnName("AlterationDate");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnName("CreationDate");
 
                     b.Property<Guid>("StudentsClassId");
 

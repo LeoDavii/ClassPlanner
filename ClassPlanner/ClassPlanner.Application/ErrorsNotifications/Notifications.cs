@@ -1,6 +1,6 @@
 ﻿using Flunt.Notifications;
 
-namespace ClassPlanner.Application.Notification
+namespace ClassPlanner.Application.ErrorsNotifications
 {
     public class Notifications : Notifiable
     {

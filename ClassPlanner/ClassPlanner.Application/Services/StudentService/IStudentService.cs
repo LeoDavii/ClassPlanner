@@ -11,6 +11,8 @@ namespace ClassPlanner.Application.Services.StudentService
         Task Delete(Guid id);
         Task Update(StudentRequestDTO request);
         Task<StudentResponseDTO> GetById(Guid id);
-        Task<IList<StudentResponseDTO>> GetAll();
+        IList<StudentResponseDTO> GetAll();
+        IList<StudentResponseDTO> GetAllActives();
+
     }
 }

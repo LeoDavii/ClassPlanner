@@ -1,5 +1,4 @@
-﻿using ClassPlanner.Application.Models.Services.StudentService;
-using ClassPlanner.Application.Services.StudentService;
+﻿using ClassPlanner.Application.Services.StudentService;
 using ClassPlanner.Domain.Interfaces;
 using ClassPlanner.Infra.Context;
 using ClassPlanner.Infra.Repositories.StudentRepository;
@@ -11,7 +10,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Swagger;
 using System.IO;
 
 namespace ClassPlanner.Web

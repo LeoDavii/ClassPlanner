@@ -4,8 +4,8 @@ namespace ClassPlanner.Domain.Entities
 {
     public abstract class BaseEntity
     {
-        public bool Active { get; set; }
-        public Guid Id { get; set; }
+        public bool Active { get; protected set; }
+        public Guid Id { get; protected set; }
 
         public void Disable()
         {

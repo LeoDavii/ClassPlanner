@@ -10,8 +10,9 @@ namespace ClassPlanner.Domain.Interfaces
         Task Create (TEntity entity);
         Task Delete (Guid id);
         IQueryable<TEntity> GetAll();
+        IQueryable<TEntity> GetAllActives();
         Task<TEntity> GetById(Guid id);
         Task Update(Guid Id, TEntity entity);
-        Task<bool> EntityExists(Guid id);
+        bool EntityExists(Guid id);
     }
 }
