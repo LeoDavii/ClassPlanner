@@ -1,7 +1,15 @@
-﻿using ClassPlanner.Application.Services.StudentService;
+﻿using AutoMapper;
+using ClassPlanner.Application.Services.StudentClassService;
+using ClassPlanner.Application.Services.StudentService;
+using ClassPlanner.Application.Services.TeacherService;
+using ClassPlanner.Application.Services.UserService;
+using ClassPlanner.Application.Utils;
 using ClassPlanner.Domain.Interfaces;
 using ClassPlanner.Infra.Context;
 using ClassPlanner.Infra.Repositories.StudentRepository;
+using ClassPlanner.Infra.Repositories.StudentsClassRepository;
+using ClassPlanner.Infra.Repositories.TeacherRepository;
+using ClassPlanner.Infra.Repositories.UserRepository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -27,8 +35,16 @@ namespace ClassPlanner.Web
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<MainContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("ClassPlannerConnectionString")));
+            services.AddScoped<IStudentsClassService, StudentsClassService>();
+            services.AddScoped<IStudentsClassRepository, StudentsClassRepository>();
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<ITeacherService, TeacherService>();
+            services.AddScoped<ITeacherRepository, TeacherRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<Notifications, Notifications>();
+            services.AddScoped<Emails, Emails>();
             services.AddCors();
             services.AddSwaggerGen(c =>
             {
@@ -49,11 +65,16 @@ namespace ClassPlanner.Web
 
                 c.IncludeXmlComments(xml);
             });
+
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
         }
-
-
-
-
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
 

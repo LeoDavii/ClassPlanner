@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ClassPlanner.Application.ErrorsNotifications;
+using ClassPlanner.Application.Utils;
 using ClassPlanner.Application.Models.TeacherModel;
 using ClassPlanner.Application.Models.User;
 using ClassPlanner.Application.Services.UserService;
@@ -20,7 +20,7 @@ namespace ClassPlanner.Application.Services.TeacherService
         private readonly IMapper _mapper;
 
         public TeacherService(ITeacherRepository teacherRepository, Notifications notifications,
-                              IMapper mapper, IUserService userService)
+                              IMapper mapper, IUserService userService, ITeacherInChargeRepository teacherInChargeRepository)
         {
             _teacherRepository = teacherRepository;
             _notifications = notifications;
@@ -39,7 +39,6 @@ namespace ClassPlanner.Application.Services.TeacherService
                 Role = (int)Roles.Docente,
             };
             await _userService.Create(user);
-            
         }
 
         public async Task Delete(Guid id)

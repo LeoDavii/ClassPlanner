@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ClassPlanner.Application.ErrorsNotifications;
+using ClassPlanner.Application.Utils;
 using ClassPlanner.Application.Models.StudentModel;
 using ClassPlanner.Domain.Entities;
 using ClassPlanner.Domain.Interfaces;

@@ -7,9 +7,9 @@ using ClassPlanner.Domain.Entities;
 
 namespace ClassPlanner.Application.Utils
 {
-    public class AutoMapper : Profile
+    public class MappingProfile : Profile
     {
-        public AutoMapper()
+        public MappingProfile()
         {
             CreateMap<StudentsClass, StudentsClassResponseDTO>().ReverseMap();
             CreateMap<StudentsClass, StudentsClassRequestDTO>().ReverseMap();

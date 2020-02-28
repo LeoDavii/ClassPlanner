@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
-using ClassPlanner.Application.ErrorsNotifications;
+using ClassPlanner.Application.Utils;
 using ClassPlanner.Application.Models.User;
 using ClassPlanner.Application.Services.UserService;
+using ClassPlanner.Application.Utils;
 using ClassPlanner.Domain.Entities;
 using ClassPlanner.Domain.Interfaces;
 using System;
@@ -15,13 +16,15 @@ namespace ClassPlanner.Application.Services.StudentService
         private readonly IUserRepository _userRepository;
         private readonly Notifications _notifications;
         private readonly IMapper _mapper;
+        private readonly Emails _emails;
 
         public UserService(IUserRepository userRepository, Notifications notifications,
-                           IMapper mapper)
+                           IMapper mapper, Emails emails)
         {
             _userRepository = userRepository;
             _notifications = notifications;
             _mapper = mapper;
+            _emails = emails;
         }
 
         public async Task Create(UserRequestDTO request)
@@ -29,6 +32,7 @@ namespace ClassPlanner.Application.Services.StudentService
             var firstPassword = GenerateFirstPassword(request.Name);
             var user = new User(request.Name, request.EmailLogin, firstPassword, request.Role);
             await _userRepository.Create(user);
+            _emails.SendEmailNewUser(user.EmailLogin, user.Password);
         }
 
         public async Task Delete(Guid id)
