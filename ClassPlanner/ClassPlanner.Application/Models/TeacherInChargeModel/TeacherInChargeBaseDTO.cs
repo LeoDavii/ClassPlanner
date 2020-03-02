@@ -7,5 +7,6 @@ namespace ClassPlanner.Application.Models.TeacherInChargeModel
         public Guid StudentsClassId { get; set; }
         public Guid TeacherId { get; set; }
         public bool Active { get; set; }
+        public Guid Id { get; set; }
     }
 }

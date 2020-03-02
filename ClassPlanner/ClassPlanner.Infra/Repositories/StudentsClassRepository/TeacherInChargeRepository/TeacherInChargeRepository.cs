@@ -26,7 +26,7 @@ namespace ClassPlanner.Infra.Repositories.StudentsClassRepository.TeacherInCharg
             return _dbContext.Set<TeacherInCharge>()
                              .Include(x => x.StudentsClass)
                              .FirstOrDefault(x => x.StudentsClass.Id == studentCLassId 
-                                             && x.Active == true);
+                                               && x.Active == true);
         }
     }
 }

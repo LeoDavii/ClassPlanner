@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ClassPlanner.Application.Models.StudenstClassModel;
 using ClassPlanner.Application.Models.StudentModel;
+using ClassPlanner.Application.Models.TeacherInChargeModel;
 using ClassPlanner.Application.Models.TeacherModel;
 using ClassPlanner.Application.Models.User;
 using ClassPlanner.Domain.Entities;
@@ -18,7 +19,9 @@ namespace ClassPlanner.Application.Utils
             CreateMap<Student, StudentResponseDTO>().ReverseMap();
             CreateMap<Student, StudentRequestDTO>().ReverseMap();
             CreateMap<User, UserReponseDTO>().ReverseMap();
-            CreateMap<User, UserRequestDTO>().ReverseMap();                                                         
+            CreateMap<User, UserRequestDTO>().ReverseMap();
+            CreateMap<TeacherInCharge, TeacherInChargeRequestDTO>().ReverseMap();
+            CreateMap<TeacherInCharge, TeacherInChargeResponseDTO>().ReverseMap();
         }
     }
 }

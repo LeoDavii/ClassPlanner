@@ -9,12 +9,14 @@ using ClassPlanner.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ClassPlanner.Application.Models.TeacherInChargeModel;
 
 namespace ClassPlanner.Application.Services.TeacherService
 {
     public class TeacherService : ITeacherService
     {
         private readonly ITeacherRepository _teacherRepository;
+        private readonly ITeacherInChargeRepository _teacherInChargeRepository;
         private readonly IUserService _userService;
         private readonly Notifications _notifications;
         private readonly IMapper _mapper;
@@ -23,12 +25,15 @@ namespace ClassPlanner.Application.Services.TeacherService
                               IMapper mapper, IUserService userService, ITeacherInChargeRepository teacherInChargeRepository)
         {
             _teacherRepository = teacherRepository;
+            _teacherInChargeRepository = teacherInChargeRepository;
             _notifications = notifications;
             _mapper = mapper;
             _userService = userService;
+
         }
 
-        public async Task Create(TeacherRequestDTO request)
+        #region Teacher
+        public async Task CreateTeacher(TeacherRequestDTO request)
         {
             var teacher = new Teacher(request.Name, request.CPF);
             await _teacherRepository.Create(teacher);
@@ -41,7 +46,7 @@ namespace ClassPlanner.Application.Services.TeacherService
             await _userService.Create(user);
         }
 
-        public async Task Delete(Guid id)
+        public async Task DeleteTeacher(Guid id)
         {
             if (_teacherRepository.EntityExists(id))
             {
@@ -58,7 +63,7 @@ namespace ClassPlanner.Application.Services.TeacherService
             return;
         }
 
-        public async Task Update(TeacherRequestDTO request)
+        public async Task UpdateTeacher(TeacherRequestDTO request)
         {
             if (_teacherRepository.EntityExists(request.Id))
             {
@@ -72,7 +77,7 @@ namespace ClassPlanner.Application.Services.TeacherService
             }
         }
 
-        public async Task<TeacherResponseDTO> GetById(Guid id)
+        public async Task<TeacherResponseDTO> GetTeacherById(Guid id)
         {
             if (_teacherRepository.EntityExists(id))
             {
@@ -87,16 +92,105 @@ namespace ClassPlanner.Application.Services.TeacherService
             return null;
         }
 
-        public IList<TeacherResponseDTO> GetAll()
+        public IList<TeacherResponseDTO> GetAllTeachers()
         {
             var teacher = _teacherRepository.GetAll();
             return _mapper.Map<IList<TeacherResponseDTO>>(teacher);
         }
 
-        public IList<TeacherResponseDTO> GetAllActives()
+        public IList<TeacherResponseDTO> GetAllActiveTeachers()
         {
             var teacher = _teacherRepository.GetAllActives();
             return _mapper.Map<IList<TeacherResponseDTO>>(teacher);
         }
+
+        #endregion
+
+        #region TeacherInCharge
+        public async Task CreateTeacherInCharge(TeacherInChargeRequestDTO request)
+        {
+            var teacherInCharge = new TeacherInCharge(request.StudentsClassId, request.TeacherId);
+            await _teacherInChargeRepository.Create(teacherInCharge);
+        }
+
+        public async Task DeleteTeacherInCharge(Guid id)
+        {
+            if (_teacherInChargeRepository.EntityExists(id))
+            {
+                var teacherInCharge = await _teacherInChargeRepository.GetById(id);
+                teacherInCharge.Disable();
+                await _teacherInChargeRepository.Update(id, teacherInCharge);
+            }
+
+            else
+            {
+                _notifications.AddNotification("Not Found", "O vínculo informado não existe!");
+            }
+
+            return;
+        }
+
+        public async Task UpdateTeacherInCharge(TeacherInChargeRequestDTO request)
+        {
+            if (_teacherInChargeRepository.EntityExists(request.Id))
+            {
+                var teacherInCharge = await _teacherInChargeRepository.GetById(request.Id);
+                teacherInCharge.Update(request.StudentsClassId, teacherInCharge.TeacherId, teacherInCharge.Active);
+                await _teacherInChargeRepository.Update(request.Id, teacherInCharge);
+            }
+            else
+            {
+                _notifications.AddNotification("Not Found", "O vínculo informado não existe!");
+            }
+        }
+
+        public async Task<TeacherInChargeResponseDTO> GetTeacherInChargeById(Guid id)
+        {
+            if (_teacherInChargeRepository.EntityExists(id))
+            {
+                var teacher = await _teacherRepository.GetById(id);
+                return _mapper.Map<TeacherInChargeResponseDTO>(teacher);
+            }
+            else
+            {
+                _notifications.AddNotification("NotFound", "O vínculo informado não existe!");
+            }
+
+            return null;
+        }
+
+        public async Task<TeacherInChargeResponseDTO> GetTeacherInChargeByClassId(Guid id)
+        {
+            if (_teacherInChargeRepository.EntityExists(id))
+            {
+                var teacherInCharge = _teacherInChargeRepository.GetTeacherInChargeByClassId(id);
+                return _mapper.Map<TeacherInChargeResponseDTO>(teacherInCharge);
+            }
+            else
+            {
+                _notifications.AddNotification("NotFound", "O vínculo informado não existe!");
+            }
+
+            return null;
+        }
+
+        public IList<TeacherInChargeResponseDTO> GetAllTeachersInCharge()
+        {
+            var teacherInCharge = _teacherInChargeRepository.GetAll();
+            return _mapper.Map<IList<TeacherInChargeResponseDTO>>(teacherInCharge);
+        }
+
+        public IList<TeacherInChargeResponseDTO> GetAllActiveTeachersInCharge()
+        {
+            var teacherInCharge = _teacherRepository.GetAllActives();
+            return _mapper.Map<IList<TeacherInChargeResponseDTO>>(teacherInCharge);
+        }
+
+        public IList<TeacherInChargeResponseDTO> GetAllTeachersInChargeAndClasses()
+        {
+            var teacherInCharge = _teacherInChargeRepository.GetAllTeachersInChargeAndClasses();
+            return _mapper.Map<IList<TeacherInChargeResponseDTO>>(teacherInCharge);
+        }
+        #endregion
     }
 }

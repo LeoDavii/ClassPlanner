@@ -9,16 +9,18 @@ namespace ClassPlanner.Domain.Entities
         {
         }
 
-        public TeacherInCharge(Guid studentsClassId)
+        public TeacherInCharge(Guid studentsClassId, Guid teacherId)
         {
             StudentsClassId = studentsClassId;
+            TeacherId = teacherId;
             Active = true;
             CreationDate = DateTime.Now;
         }
 
-        public void Update(Guid studentsClassId, bool active)
+        public void Update(Guid studentsClassId, Guid teacherId, bool active)
         {
             StudentsClassId = studentsClassId;
+            TeacherId = teacherId;
             Active = active;
             AlterationDate = DateTime.Now;
         }

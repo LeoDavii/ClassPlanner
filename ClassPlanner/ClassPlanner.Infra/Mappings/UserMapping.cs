@@ -14,7 +14,7 @@ namespace ClassPlanner.Infra.Mappings
             builder.Property(d => d.Role).HasColumnName(nameof(User.Role)).IsRequired();
             builder.Property(d => d.CreationDate).HasColumnName(nameof(User.CreationDate)).IsRequired();
             builder.Property(d => d.AlterationDate).HasColumnName(nameof(User.AlterationDate)).IsRequired();
-            builder.Property(d => d.Active).HasColumnName(nameof(User.AlterationDate));
+            builder.Property(d => d.Active).HasColumnName(nameof(User.Active));
         }
     }
 }
